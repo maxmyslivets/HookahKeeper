@@ -8,6 +8,7 @@ from kivy.uix.boxlayout import BoxLayout
 import time
 from kivy.properties import ObjectProperty
 from kivy.clock import Clock
+from kivy.uix.screenmanager import Screen
 
 
 Config.set('graphics', 'fullscreen', 'auto')
@@ -35,10 +36,10 @@ class RootLayout(BoxLayout):
         # забираем из модуля time значение времени "Wed Jan  8 13:27:34 2020"
         # в time_label.text выводим [11:19] => "13:27:34"
         self.time_label.text = time.ctime(time.time())[0:11] + '\n' + time.ctime(time.time())[11:19]
-    
-    def win_min(self):
-        
-        Config.set('graphics', 'window_state', 'minimized')
+
+
+class AddHokahWindow(BoxLayout):
+    pass
 
 
 class HookahSferaClubApp(MDApp):
@@ -46,6 +47,16 @@ class HookahSferaClubApp(MDApp):
     def build(self):
         
         return RootLayout()
+    
+    def win_min(self):
+        Config.set('graphics', 'window_state', 'minimized')
+
+    def add_hookah_window(self):
+        from kivy.uix.modalview import ModalView
+
+        add_win = ModalView(size_hint=(None, None), size=(400, 200))
+        add_win.add_widget(AddHokahWindow())
+        add_win.open()
 
 
 if __name__ == '__main__':

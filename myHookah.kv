@@ -12,6 +12,9 @@
     background_normal: ''
     background_color: (.12, .12, .17, 1)
 
+    # on_release: app.dialog_window()
+    on_release: app.add_hookah_window()
+
 <LabelStol@Label>:
     text_size: self.size
     halign: 'left'
@@ -30,7 +33,7 @@
 #
 ############################################################
 
-<RootLayout>
+<RootLayout>:
     orientation: 'vertical'
     canvas:
         Color:
@@ -102,7 +105,7 @@
                     user_font_size: "14sp"
                     pos_hint: {'top': 1}
                     
-                    on_release: root.win_min()
+                    on_release: app.win_min()
             
                 MDIconButton:
 
@@ -416,3 +419,13 @@
                 font_size: '24'
                 halign: 'center'
                 valign: 'middle'
+
+<AddHokahWindow>
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 40, 40, 40, 40
+        spacing: 10
+        Button:
+            text: 'New'
+        Button:
+            text: 'Window'
