@@ -54,7 +54,7 @@ class HookahSferaClubApp(MDApp):
     def add_hookah_window(self):
         from kivy.uix.modalview import ModalView
 
-        add_win = ModalView(size_hint=(None, None), size=(400, 200))
+        add_win = ModalView(size_hint=(None, None), size=(340, 400))
         add_win.add_widget(AddHokahWindow())
         add_win.open()
 

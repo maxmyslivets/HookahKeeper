@@ -12,7 +12,6 @@
     background_normal: ''
     background_color: (.12, .12, .17, 1)
 
-    # on_release: app.dialog_window()
     on_release: app.add_hookah_window()
 
 <LabelStol@Label>:
@@ -423,9 +422,57 @@
 <AddHokahWindow>
     BoxLayout:
         orientation: 'vertical'
-        padding: 40, 40, 40, 40
-        spacing: 10
-        Button:
-            text: 'New'
-        Button:
-            text: 'Window'
+        padding: 40, 0, 40, 40
+        canvas:
+            Color:
+                rgba: .17, .18, .24, .9
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        AnchorLayout:
+            size_hint_y: .4
+
+            Label:
+                pos_hint: {'center_y': .5}
+                text: u'ДОБАВИТЬ ЗАКАЗ'
+                font_size: '24'
+
+        BoxLayout:
+
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_x: .6
+                spacing: 4
+
+                Button:
+                    size_hint_x: 1
+                    font_size: '14'
+                    background_normal: ''
+                    background_color: (.12, .12, .17, 1)
+                    text: u"КЛАССИЧЕСКИЙ"
+                Button:
+                    size_hint_x: 1
+                    font_size: '14'
+                    background_normal: ''
+                    background_color: (.12, .12, .17, 1)
+                    text: u'С ДОБАВКАМИ'
+                Button:
+                    size_hint_x: 1
+                    font_size: '14'
+                    background_normal: ''
+                    background_color: (.12, .12, .17, 1)
+                    text: u'НА ФРУКТЕ'
+                Button:
+                    size_hint_x: 1
+                    font_size: '14'
+                    background_normal: ''
+                    background_color: (.12, .12, .17, 1)
+                    text: u'МИКС'
+                Button:
+                    size_hint_x: 1
+                    font_size: '14'
+                    background_normal: ''
+                    background_color: (.12, .12, .17, 1)
+                    text: u'ЗАМЕНА ЧАШИ'
+
