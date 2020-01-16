@@ -78,15 +78,6 @@
                     text_size: self.size
                     halign: 'left'
                     valign: 'top'
-
-                
-            #Button:
-                #text: u'База Данных'
-                #size_hint: .5, .5
-                #pos_hint: {'center_y': .5, 'center_x': .5}
-                #font_size: '14'
-                #background_normal: ''
-                #background_color: .12, .12, .17, 1
             
             Label:
                 id: time_label
@@ -104,39 +95,22 @@
                 size: 68, 32
                 pos_hint: {'top': 1}
                 
-                Button:
+                MDIconButton:
+                    id: min_window_button
+                    icon: "window-minimize"
 
-                    id: hide_window_button
-                    size_hint: None, None
-                    size: 32, 32
+                    user_font_size: "14sp"
                     pos_hint: {'top': 1}
-                    background_normal: ''
-                    background_color: .17, .18, .24, 1
-
-                    Image:
-                        source: 'minimized.png'
-                        allow_stretch: True # позволяет растягивать изображение
-                        keep_ratio: False # позволяет изображение растягивается неравномерно
-                        size: hide_window_button.size
-                        pos: hide_window_button.pos
-
-                    #on_release: root.win_min()
+                    
+                    on_release: root.win_min()
             
-                Button:
+                MDIconButton:
 
                     id: close_window_button
-                    size_hint: None, None
-                    size: 32, 32
-                    pos_hint: {'top': 1}
-                    background_normal: ''
-                    background_color: .12, .12, .17, 1
+                    icon: "window-close"
 
-                    #Image:
-                        #source: 'close.png'
-                        #allow_stretch: True # позволяет растягивать изображение
-                        #keep_ratio: False # позволяет изображение растягивается неравномерно
-                        #size: close_window_button.size
-                        #pos: close_window_button.pos
+                    user_font_size: "14sp"
+                    pos_hint: {'top': 1}
 
                     on_release: app.stop()
 
