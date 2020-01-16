@@ -12,7 +12,7 @@
     background_normal: ''
     background_color: (.12, .12, .17, 1)
 
-    on_release: app.add_hookah_window()
+    on_release: app.add_hookah_window(), app.global_value_number_stol(self.text)
 
 <LabelStol@Label>:
     text_size: self.size
@@ -451,24 +451,36 @@
                     background_normal: ''
                     background_color: (.12, .12, .17, 1)
                     text: u"КЛАССИЧЕСКИЙ"
+
+                    on_release: app.classic_hookah()
+
                 Button:
                     size_hint_x: 1
                     font_size: '14'
                     background_normal: ''
                     background_color: (.12, .12, .17, 1)
                     text: u'С ДОБАВКАМИ'
+
+                    on_release: app.additive_hookah()
+
                 Button:
                     size_hint_x: 1
                     font_size: '14'
                     background_normal: ''
                     background_color: (.12, .12, .17, 1)
                     text: u'НА ФРУКТЕ'
+
+                    on_release: app.fruit_hookah()
+
                 Button:
                     size_hint_x: 1
                     font_size: '14'
                     background_normal: ''
                     background_color: (.12, .12, .17, 1)
                     text: u'МИКС'
+
+                    on_release: app.mix_hookah()
+
                 Button:
                     size_hint_x: 1
                     font_size: '14'
@@ -476,3 +488,119 @@
                     background_color: (.12, .12, .17, 1)
                     text: u'ЗАМЕНА ЧАШИ'
 
+                    on_release: app.replacement_hookah()
+
+
+<ClassicHookah@BoxLayout>:
+    orientation: 'vertical'
+    padding: 0, 0, 0, 20
+
+    classic_stol_number: classic_stol_number
+    #stol_number: stol_number
+    #stol_number: stol_number
+    #stol_number: stol_number
+    #stol_number: stol_number
+
+    classic_time: classic_time
+    #time: time
+    #time: time
+    #time: time
+    #time: time
+
+    canvas:
+        Color:
+            rgba: .17, .18, .24, .9
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    BoxLayout:
+        orientation: 'horizontal'
+        padding: 40, 40, 40, 40
+        spacing: 20
+        
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_x: .5
+
+            Label:
+                text: u'стол:'
+                text_size: self.size
+            Label:
+                text: u'вид:'
+                text_size: self.size
+            Label:
+                text: u'цена:'
+                text_size: self.size
+            Label:
+                text: u'время:'
+                text_size: self.size
+        
+        BoxLayout:
+            orientation: 'vertical'
+            Label:
+                id: classic_stol_number
+                text_size: self.size
+            Label:
+                text: u'Классический'
+                text_size: self.size
+            Label:
+                text: u'20 р.'
+                text_size: self.size
+            Label:
+                id: classic_time
+                text_size: self.size
+        
+    Button:
+        size_hint: .8, .2
+        pos_hint: {'center_x': .5}
+        text: u'добавить заказ'
+        font_size: '14'
+        background_normal: ''
+        background_color: (.12, .12, .17, 1)
+
+        # on_release: ...
+
+<AdditiveHookah>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 40, 0, 40, 40
+        canvas:
+            Color:
+                rgba: .17, .18, .24, .9
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+<FruitHookah>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 40, 0, 40, 40
+        canvas:
+            Color:
+                rgba: .17, .18, .24, .9
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+<MixHookah>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 40, 0, 40, 40
+        canvas:
+            Color:
+                rgba: .17, .18, .24, .9
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+<ReplacementHookah>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 40, 0, 40, 40
+        canvas:
+            Color:
+                rgba: .17, .18, .24, .9
+            Rectangle:
+                pos: self.pos
+                size: self.size
