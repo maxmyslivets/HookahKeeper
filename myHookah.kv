@@ -452,7 +452,8 @@
                     background_color: (.12, .12, .17, 1)
                     text: u"КЛАССИЧЕСКИЙ"
 
-                    on_release: app.classic_hookah()
+                    on_release: app.classic_hookah(), root.dismiss()
+                    # если не здесь, то попробоват в main.py
 
                 Button:
                     size_hint_x: 1
