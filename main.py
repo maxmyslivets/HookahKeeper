@@ -68,7 +68,7 @@ class RootLayout(BoxLayout):
         # P.S. Если прописать код в time_update, то все работает
 
         if stol_number_add_hookah == '1':
-            self.type_1.text = 'type_add_hookah'
+            self.type_1.text = type_add_hookah
             self.time_1.text = time_add_hookah
             
             print (stol_number_add_hookah,
