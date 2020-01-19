@@ -43,6 +43,20 @@
 
     time_label: time_label
 
+    type_1: type_1
+    type_2: type_2
+    type_3: type_3
+    type_4: type_4
+    type_5: type_5
+    type_6: type_6
+    type_7: type_7
+    type_8: type_8
+    type_9: type_9
+
+    time_1: time_1
+    time_2: time_2
+    time_3: time_3
+
     ############################################################
     #
     #                 Toolbar (Anchor)
@@ -66,9 +80,9 @@
 
             BoxLayout:
                 orientation: 'vertical'
-                size_hint_x: .4
+                size_hint_x: .7
                 Label:
-                    text: 'HOOKAH'
+                    text: 'HOOKAH KEEPER'
                     font_size: '40sp'
                     text_size: self.size
                     halign: 'left'
@@ -144,8 +158,10 @@
                         text: '1'
                     BoxVert:
                         LabelStol:
+                            id: type_1
                             text: 'None'
                         LabelStol:
+                            id: time_1
                             text: '0 / 0'
 
                 Box10:
@@ -153,8 +169,10 @@
                         text: '2'
                     BoxVert:
                         LabelStol:
+                            id: type_2
                             text: 'None'
                         LabelStol:
+                            id: time_2
                             text: '0 / 0'
 
                 Box10:
@@ -162,8 +180,10 @@
                         text: '3'
                     BoxVert:
                         LabelStol:
+                            id: type_3
                             text: 'None'
                         LabelStol:
+                            id: time_3
                             text: '0 / 0'
 
                 Box10:
@@ -171,6 +191,7 @@
                         text: '4'
                     BoxVert:
                         LabelStol:
+                            id: type_4
                             text: 'None'
                         LabelStol:
                             text: '0 / 0'
@@ -180,6 +201,7 @@
                         text: '5'
                     BoxVert:
                         LabelStol:
+                            id: type_5
                             text: 'None'
                         LabelStol:
                             text: '0 / 0'
@@ -189,6 +211,7 @@
                         text: '6'
                     BoxVert:
                         LabelStol:
+                            id: type_6
                             text: 'None'
                         LabelStol:
                             text: '0 / 0'
@@ -198,6 +221,7 @@
                         text: '7'
                     BoxVert:
                         LabelStol:
+                            id: type_7
                             text: 'None'
                         LabelStol:
                             text: '0 / 0'
@@ -207,6 +231,7 @@
                         text: '8'
                     BoxVert:
                         LabelStol:
+                            id: type_8
                             text: 'None'
                         LabelStol:
                             text: '0 / 0'
@@ -216,6 +241,7 @@
                         text: '9'
                     BoxVert:
                         LabelStol:
+                            id: type_9
                             text: 'None'
                         LabelStol:
                             text: '0 / 0'
@@ -495,17 +521,9 @@
     orientation: 'vertical'
     padding: 0, 0, 0, 20
 
-    classic_stol_number: classic_stol_number
-    #stol_number: stol_number
-    #stol_number: stol_number
-    #stol_number: stol_number
-    #stol_number: stol_number
-
-    classic_time: classic_time
-    #time: time
-    #time: time
-    #time: time
-    #time: time
+    stol_number: stol_number
+    time_add: time_add
+    type_hookah: type_hookah
 
     canvas:
         Color:
@@ -539,16 +557,17 @@
         BoxLayout:
             orientation: 'vertical'
             Label:
-                id: classic_stol_number
+                id: stol_number
                 text_size: self.size
             Label:
+                id: type_hookah
                 text: u'Классический'
                 text_size: self.size
             Label:
                 text: u'20 р.'
                 text_size: self.size
             Label:
-                id: classic_time
+                id: time_add
                 text_size: self.size
         
     Button:
@@ -559,7 +578,7 @@
         background_normal: ''
         background_color: (.12, .12, .17, 1)
 
-        # on_release: ...
+        on_release: app.stol_data(stol_number.text, time_add.text, type_hookah.text)
 
 <AdditiveHookah>:
     BoxLayout:
