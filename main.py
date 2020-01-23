@@ -9,6 +9,9 @@ from kivy.properties import ObjectProperty
 from kivy.clock import Clock
 from kivy.uix.screenmanager import Screen
 from kivy.uix.modalview import ModalView
+from kivymd.uix.selectioncontrol import MDCheckbox
+from kivymd.uix.list import IRightBodyTouch
+from datetime import datetime
 import time
 
 
@@ -16,7 +19,7 @@ Config.set('graphics', 'fullscreen', 'auto')
 
 
 with open("myHookah.kv", encoding='utf8') as f:
-    """ Данным метод прочтения файла .kv выбран для
+    """ Данный метод прочтения файла .kv выбран для
     возможности прочтения Кириллицы в кодировке utf8 """
 
     drunk = Builder.load_string(f.read())
@@ -25,7 +28,8 @@ with open("myHookah.kv", encoding='utf8') as f:
 class RootLayout(BoxLayout):
     """ Главное окно """
 
-    time_label = ObjectProperty()
+    time_label_1 = ObjectProperty()
+    time_label_2 = ObjectProperty()
 
     type_1 = ObjectProperty()
 
@@ -55,15 +59,53 @@ class RootLayout(BoxLayout):
     
     def time_update(self):
         """ Функция обновления времени в time_label """
-        # FIXME: Переделать time в формат '18.01.2020 Суббота \n 22:57:34'
 
-        # в time_label.text из модуля time выводим [11:19] => "13:27:34"
-        self.time_label.text = time.ctime(time.time())[0:11] + '\n' + time.ctime(time.time())[11:19]
+        # в time_label.text из time_edit выводим дату и время
+        self.time_label_1.text = self.time_edit_1()
+        self.time_label_2.text = self.time_edit_2()
 
 
+    def day_translite(self):
+        # перевод дня недели
+
+        # Sun Jan 19 01:59:38 2020
+        day = time.ctime(time.time()).split(' ')[0]
+
+        day_dict = {
+            'Thu': 'Четверг',
+            'Sun': 'Воскресенье'}
+        
+        for i in day_dict:
+            if day == i:
+                day = day_dict[i]
+
+        return day
+
+    def time_edit_1(self):
+        """ Форматирование даты """
+
+        data = datetime.now().strftime('%x')
+        data = str(data)[0:2]+'.'+str(data)[3:5]+'.'+str(data)[6:8]
+
+        return str(data+' '+self.day_translite())
+
+    def time_edit_2(self):
+        """ Форматирование времени """
+
+        hms = time.ctime(time.time()).split(' ')[3]
+
+        return str('\n'+hms)
+
+    hookah_list = ObjectProperty()
+    text_hookah = ObjectProperty()
+    
     def stol_add_data(self, stol_number_add_hookah, type_add_hookah, time_add_hookah):
         """ Передача указанного типа кальяна и времени подачи
         в label указанного стола """
+
+        # Add hookah data in hookah_list
+        # XXX hookah_list.add_widget(DataForHookahList(self.text_hookah.text = type_add_hookah))
+
         # FIXME: Не добавляется в label стола.
         # P.S. Если прописать код в time_update, то все работает
 
@@ -74,6 +116,14 @@ class RootLayout(BoxLayout):
             print (stol_number_add_hookah,
             type_add_hookah,
             time_add_hookah)
+
+
+class IconRightSampleWidget(IRightBodyTouch, MDCheckbox):
+    pass
+
+
+class DataForHookahList():
+    pass
 
 
 class AddHokahWindow(BoxLayout):
