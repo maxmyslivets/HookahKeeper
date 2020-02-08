@@ -3,18 +3,14 @@ from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.properties import ObjectProperty
 from kivy.clock import Clock
-from kivy.uix.button import Button
 from libs.time_format import time_edit_1, time_edit_2
+from kivy.uix.button import Button
 
 
 class RootScreen(Screen):
 
-    with open("RootScreen.kv", encoding='utf8') as RootScreenKV:
+    with open("kv/RootScreen.kv", encoding='utf8') as RootScreenKV:
         Builder.load_string(RootScreenKV.read())
-
-    def func(self, txt):
-        print(txt)
-        self.manager.current = 'Add Hookah Screen'
     
     time_label_1 = ObjectProperty()
     time_label_2 = ObjectProperty()
@@ -32,20 +28,19 @@ class RootScreen(Screen):
         self.time_label_2.text = time_edit_2() # время
 
 
+    def func(self, txt):
+        print(txt)
+
+
 class AddHookahScreen(Screen):
 
-    with open("AddHookahScreen.kv", encoding='utf8') as AddHookahScreenKV:
+    with open("kv/AddHookahScreen.kv", encoding='utf8') as AddHookahScreenKV:
         Builder.load_string(AddHookahScreenKV.read())
-
-    def functwo(self):
-        self.manager.current = 'Root Screen'
 
 
 class HookahSferaClubApp(MDApp):
 
     def build(self):
-
-        #self.root = Builder.load_string(kv_code)
 
         sm = ScreenManager()
         sm.add_widget(RootScreen(name='Root Screen'))
