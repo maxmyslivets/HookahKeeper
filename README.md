@@ -1,2 +1,3 @@
 # HookahKeeper
-Hookah keeper by Max Myslivets for Sfera Club
+
+Программа-кипер для обработки заказов кальяна (для Sfera Club)
