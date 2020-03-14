@@ -54,14 +54,18 @@
 
 
                     MDTextField:
+                        id: table
                         hint_text: 'Table'
                     MDTextField:
+                        id: cls
                         hint_text: 'Class hookah'
                     MDTextField:
+                        id: additive
                         hint_text: 'Additive'
                     MDFillRoundFlatButton:
                         size_hint_x: 1
                         text: 'Add order'
+                        on_release: root.add_order(table.text, cls.text, additive.text)
 
             MDSeparator:
                 orientation: 'vertical'
@@ -70,58 +74,17 @@
                 MDList:
                     id: mdlist
                     OneLineAvatarIconListItem:
-                        text: '24 Classic     23:14     01:24     02:14'
+                        text: '24 Classic      23:14      01:24      02:14'
                         IconLeftWidget:
                             icon: 'smoking'
                         MDIconButton:
                             pos_hint: {'right': 1, 'center_y': .5}
                             icon: 'smoking-off'
-                    OneLineAvatarIconListItem:
-                        text: 'Hookah'
-                        IconLeftWidget:
-                            icon: 'smoking'
-                        MDIconButton:
-                            pos_hint: {'right': 1, 'center_y': .5}
-                            icon: 'smoking-off'
-                    OneLineAvatarIconListItem:
-                        text: 'Hookah'
-                        IconLeftWidget:
-                            icon: 'smoking'
-                        MDIconButton:
-                            pos_hint: {'right': 1, 'center_y': .5}
-                            icon: 'smoking-off'
-                    OneLineAvatarIconListItem:
-                        text: 'Hookah'
-                        IconLeftWidget:
-                            icon: 'smoking'
-                        MDIconButton:
-                            pos_hint: {'right': 1, 'center_y': .5}
-                            icon: 'smoking-off'
-                    OneLineAvatarIconListItem:
-                        text: 'Hookah'
-                        IconLeftWidget:
-                            icon: 'smoking'
-                        MDIconButton:
-                            pos_hint: {'right': 1, 'center_y': .5}
-                            icon: 'smoking-off'
-                    OneLineAvatarIconListItem:
-                        text: 'Hookah'
-                        IconLeftWidget:
-                            icon: 'smoking'
-                        MDIconButton:
-                            pos_hint: {'right': 1, 'center_y': .5}
-                            icon: 'smoking-off'
-                    OneLineAvatarIconListItem:
-                        text: 'Hookah'
-                        IconLeftWidget:
-                            icon: 'smoking'
-                        MDIconButton:
-                            pos_hint: {'right': 1, 'center_y': .5}
-                            icon: 'smoking-off'
-                    OneLineAvatarIconListItem:
-                        text: 'Hookah'
-                        IconLeftWidget:
-                            icon: 'smoking'
-                        MDIconButton:
-                            pos_hint: {'right': 1, 'center_y': .5}
-                            icon: 'smoking-off'
+
+<OrderListItem>:
+    text: '24 Classic      23:14      01:24      02:14'
+    IconLeftWidget:
+        icon: 'smoking'
+    MDIconButton:
+        pos_hint: {'right': 1, 'center_y': .5}
+        icon: 'smoking-off'

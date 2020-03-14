@@ -3,6 +3,11 @@ from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.clock import Clock
 from time_format import time_edit_1, time_edit_2
+from kivymd.uix.list import OneLineAvatarIconListItem
+
+
+class OrderListItem(OneLineAvatarIconListItem):
+    pass
 
 
 class Home(Screen):
@@ -21,6 +26,15 @@ class Home(Screen):
 
         self.time_label_1.text = time_edit_1() # дата, день
         self.time_label_2.text = time_edit_2() # время
+    
+    def add_order(self, table, cls, additive):
+        print(table)
+        order = OrderListItem()
+        if not additive:
+            order.text = table + '    ' + cls + '    ' + time_edit_2()
+        else:
+            order.text = table + '    ' + additive + '    ' + time_edit_2()
+        self.ids.mdlist.add_widget(order)
 
 
 class HookahKeeperApp(MDApp):
