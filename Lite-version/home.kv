@@ -1,0 +1,127 @@
+<Home>:
+
+    time_label_1: time_label_1
+    time_label_2: time_label_2
+
+    BoxLayout:
+        orientation: 'vertical'
+
+        MDToolbar:
+            id: toolbar
+            title: 'HOOKAH Keeper'
+            md_bg_color: app.theme_cls.primary_color
+            elevation: 10
+            pos_hint: {'top': 1}
+            
+        GridLayout:
+            size_hint_y: .2
+            cols: 2
+
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_x: .6
+                MDLabel:
+                    id: time_label_1
+                    font_size: '20'
+                    text_size: self.size
+                    halign: 'center'
+                    valign: 'bottom'
+                MDLabel:
+                    id: time_label_2
+                    font_size: '30'
+                    text_size: self.size
+                    halign: 'center'
+                    valign: 'middle'
+
+            FloatLayout:
+                MDFillRoundFlatButton:
+                    text: 'Statistic'
+                    size_hint: .7, .5
+                    pos_hint: {'center_x': .5, 'center_y': .5}
+        
+        BoxLayout:
+        
+            FloatLayout:
+                size_hint_x: .6
+
+                BoxLayout:
+                    size_hint_y: None
+                    height: self.minimum_height
+                    pos_hint: {'center_x': .5, 'center_y': .5}
+                    orientation: 'vertical'
+                    padding: 20
+                    spacing: 30
+
+
+                    MDTextField:
+                        hint_text: 'Table'
+                    MDTextField:
+                        hint_text: 'Class hookah'
+                    MDTextField:
+                        hint_text: 'Additive'
+                    MDFillRoundFlatButton:
+                        size_hint_x: 1
+                        text: 'Add order'
+
+            MDSeparator:
+                orientation: 'vertical'
+                
+            ScrollView:
+                MDList:
+                    id: mdlist
+                    OneLineAvatarIconListItem:
+                        text: '24 Classic     23:14     01:24     02:14'
+                        IconLeftWidget:
+                            icon: 'smoking'
+                        MDIconButton:
+                            pos_hint: {'right': 1, 'center_y': .5}
+                            icon: 'smoking-off'
+                    OneLineAvatarIconListItem:
+                        text: 'Hookah'
+                        IconLeftWidget:
+                            icon: 'smoking'
+                        MDIconButton:
+                            pos_hint: {'right': 1, 'center_y': .5}
+                            icon: 'smoking-off'
+                    OneLineAvatarIconListItem:
+                        text: 'Hookah'
+                        IconLeftWidget:
+                            icon: 'smoking'
+                        MDIconButton:
+                            pos_hint: {'right': 1, 'center_y': .5}
+                            icon: 'smoking-off'
+                    OneLineAvatarIconListItem:
+                        text: 'Hookah'
+                        IconLeftWidget:
+                            icon: 'smoking'
+                        MDIconButton:
+                            pos_hint: {'right': 1, 'center_y': .5}
+                            icon: 'smoking-off'
+                    OneLineAvatarIconListItem:
+                        text: 'Hookah'
+                        IconLeftWidget:
+                            icon: 'smoking'
+                        MDIconButton:
+                            pos_hint: {'right': 1, 'center_y': .5}
+                            icon: 'smoking-off'
+                    OneLineAvatarIconListItem:
+                        text: 'Hookah'
+                        IconLeftWidget:
+                            icon: 'smoking'
+                        MDIconButton:
+                            pos_hint: {'right': 1, 'center_y': .5}
+                            icon: 'smoking-off'
+                    OneLineAvatarIconListItem:
+                        text: 'Hookah'
+                        IconLeftWidget:
+                            icon: 'smoking'
+                        MDIconButton:
+                            pos_hint: {'right': 1, 'center_y': .5}
+                            icon: 'smoking-off'
+                    OneLineAvatarIconListItem:
+                        text: 'Hookah'
+                        IconLeftWidget:
+                            icon: 'smoking'
+                        MDIconButton:
+                            pos_hint: {'right': 1, 'center_y': .5}
+                            icon: 'smoking-off'

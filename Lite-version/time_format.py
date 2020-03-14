@@ -37,6 +37,6 @@ def time_edit_1():
 def time_edit_2():
     """ Форматирование времени """
 
-    hms = time.ctime(time.time()).split(' ')[4]
+    hms = time.ctime(time.time()).split(' ')[3]
 
     return str('\n'+hms)
