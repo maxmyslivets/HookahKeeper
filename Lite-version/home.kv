@@ -38,6 +38,7 @@
                     text: 'Данные'
                     size_hint: .7, .5
                     pos_hint: {'center_x': .5, 'center_y': .5}
+                    on_release: root.manager.current='DataScreen'
         
         BoxLayout:
         
@@ -59,7 +60,7 @@
                     MDDropDownItem:
                         id: cls
                         size_hint_x: 1
-                        items: ['Классический', 'Добавка', 'На фрукте', 'Замена']
+                        items: ['Классический', 'С добавками', 'На фрукте', 'Замена']
                         dropdown_bg: [1, 1, 1, 1]
                     MDTextField:
                         id: additive
@@ -83,6 +84,7 @@
 
     canvas.before:
         Color:
+            id: bgc
             rgba: .13,.59,.95,.2
         Rectangle:
             pos: self.pos
@@ -101,6 +103,10 @@
 
         MDIconButton:
             icon: "plus"
+            #FIXME: Настроить смену фона OrderListItem при нажатии на MDIconButton
+            #on_release: root.ids.IconLeftWidget.icon: ""
 
         MDIconButton:
-            icon: "minus"
+            icon: "delete"
+            #FIXME: Настроить смену иконки OrderListItem при нажатии на MDIconButton
+            #on_release: root.ids.bgc.rgba: [.13,.59,.95,1]

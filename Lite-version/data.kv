@@ -1,0 +1,48 @@
+<Data>:
+
+    BoxLayout:
+        orientation: 'vertical'
+
+        MDToolbar:
+            id: toolbar
+            title: 'HOOKAH Keeper'
+            md_bg_color: app.theme_cls.primary_color
+            elevation: 10
+            pos_hint: {'top': 1}
+            
+        GridLayout:
+            size_hint_y: .2
+            cols: 2
+
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_x: .6
+                BoxLayout:
+                    padding: 16
+                    MDLabel:
+                        pos_hint: {'center_x': .5}
+                        text: 'Выберите период:'
+                BoxLayout:
+                    BoxLayout:
+                        MDIconButton:
+                            icon: 'calendar-edit'
+                            on_release: root.show_date_picker_1()
+                        MDLabel:
+                            id: date_picker_label_1
+                    BoxLayout:
+                        MDIconButton:
+                            icon: 'calendar-edit'
+                            on_release: root.show_date_picker_2()
+                        MDLabel:
+                            id: date_picker_label_2
+
+            FloatLayout:
+                MDFillRoundFlatButton:
+                    text: 'Заказы'
+                    size_hint: .7, .5
+                    pos_hint: {'center_x': .5, 'center_y': .5}
+                    on_release: root.manager.current='HomeScreen'
+        
+        BoxLayout:
+        
+            
