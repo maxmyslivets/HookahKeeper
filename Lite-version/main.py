@@ -2,7 +2,7 @@ from kivymd.app import MDApp
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.clock import Clock
-from time_format import time_edit_1, time_edit_2
+from time_format import time_edit_1, time_edit_2, time_edit_3, time_edit_4
 from kivymd.uix.list import OneLineAvatarIconListItem
 from kivymd.uix.list import IRightBodyTouch, OneLineAvatarIconListItem
 from kivymd.uix.selectioncontrol import MDCheckbox
@@ -43,16 +43,15 @@ class Home(Screen):
         order = ListItemWithCheckbox()
 
         if not additive:
-            order.text = table + '    ' + class_hookah + '    ' + time_edit_2()
+            order.text = table + '    ' + class_hookah + '    ' + time_edit_2()[:-3] + '    ' + time_edit_3() + '    ' + time_edit_4()
             with open('statistic.txt', 'a', encoding='utf8') as stat:
-                stat.write(time_edit_1()+' '+time_edit_2()[2:]+' '+table+' '+class_hookah+'\n')
+                stat.write(time_edit_1()+' '+time_edit_2()[1:-3]+' '+table+' '+class_hookah+'\n')
         else:
-            order.text = table + '    ' + additive + '    ' + time_edit_2()
+            order.text = table + '    ' + additive + '    ' + time_edit_2()[:-3] + '    ' + time_edit_3() + '    ' + time_edit_4()
             with open('statistic.txt', 'a', encoding='utf8') as stat:
-                stat.write(time_edit_1()+' '+time_edit_2()[2:]+' '+table+' '+additive+'\n')
+                stat.write(time_edit_1()+' '+time_edit_2()[1:-3]+' '+table+' '+additive+'\n')
 
         self.ids.mdlist.add_widget(order)
-
 
 
 class HookahKeeperApp(MDApp):

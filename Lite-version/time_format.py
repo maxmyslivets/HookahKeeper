@@ -2,7 +2,7 @@
     МОДУЛЬ ДЛЯ ФОРМАТИРОВАНИЯ ВРЕМЕНИ И ДАТЫ
 """
 
-from datetime import datetime
+from datetime import datetime, timedelta
 import time
 
 def day_translite():
@@ -40,3 +40,13 @@ def time_edit_2():
     hms = time.ctime(time.time()).split(' ')[3]
 
     return str('\n'+hms)
+
+def time_edit_3():
+        """ время замены """
+
+        return (str((datetime.now()+timedelta(minutes=50))).split(' ')[1])[:-10]
+
+def time_edit_4():
+        """ время конца покура """
+
+        return (str((datetime.now()+timedelta(hours=2))).split(' ')[1])[:-10]
