@@ -6,18 +6,16 @@ from time_format import time_edit_1, time_edit_2, time_edit_3, time_edit_4
 from kivymd.uix.list import OneLineAvatarIconListItem
 from kivymd.uix.list import IRightBodyTouch, OneLineAvatarIconListItem
 from kivymd.uix.selectioncontrol import MDCheckbox
+#from kivymd.uix.boxlayout import MDBoxLayout
+from kivy.uix.boxlayout import BoxLayout
 
 
 class OrderListItem(OneLineAvatarIconListItem):
-    pass
-
-
-class ListItemWithCheckbox(OneLineAvatarIconListItem):
     '''Custom list item.'''
 
 
-class RightCheckbox(IRightBodyTouch, MDCheckbox):
-    '''Custom right container.'''
+class Container(IRightBodyTouch, BoxLayout):
+    adaptive_width = True
 
 
 class Home(Screen):
@@ -40,14 +38,14 @@ class Home(Screen):
     def add_order(self, table, class_hookah, additive):
         """ Добавление заказа в MDList """
 
-        order = ListItemWithCheckbox()
+        order = OrderListItem()
 
         if not additive:
-            order.text = table + '    ' + class_hookah + '    ' + time_edit_2()[:-3] + '    ' + time_edit_3() + '    ' + time_edit_4()
+            order.text = table + ' ' + class_hookah + '    ' + time_edit_2()[:-3] + '    ' + time_edit_3() + '    ' + time_edit_4()
             with open('statistic.txt', 'a', encoding='utf8') as stat:
                 stat.write(time_edit_1()+' '+time_edit_2()[1:-3]+' '+table+' '+class_hookah+'\n')
         else:
-            order.text = table + '    ' + additive + '    ' + time_edit_2()[:-3] + '    ' + time_edit_3() + '    ' + time_edit_4()
+            order.text = table + ' ' + additive + '    ' + time_edit_2()[:-3] + '    ' + time_edit_3() + '    ' + time_edit_4()
             with open('statistic.txt', 'a', encoding='utf8') as stat:
                 stat.write(time_edit_1()+' '+time_edit_2()[1:-3]+' '+table+' '+additive+'\n')
 

@@ -35,7 +35,7 @@
 
             FloatLayout:
                 MDFillRoundFlatButton:
-                    text: 'Statistic'
+                    text: 'Данные'
                     size_hint: .7, .5
                     pos_hint: {'center_x': .5, 'center_y': .5}
         
@@ -55,18 +55,18 @@
 
                     MDTextField:
                         id: table
-                        hint_text: 'Table'
+                        hint_text: 'Стол'
                     MDDropDownItem:
                         id: cls
                         size_hint_x: 1
-                        items: ['classic', 'additive', 'replay']
+                        items: ['Классический', 'Добавка', 'На фрукте', 'Замена']
                         dropdown_bg: [1, 1, 1, 1]
                     MDTextField:
                         id: additive
-                        hint_text: 'Additive'
+                        hint_text: 'Добавка / Фрукт'
                     MDFillRoundFlatButton:
                         size_hint_x: 1
-                        text: 'Add order'
+                        text: 'Добавить заказ'
                         on_release: root.add_order(table.text, cls.current_item, additive.text); table.text=''; additive.text=''
 
             MDSeparator:
@@ -75,9 +75,11 @@
             ScrollView:
                 MDList:
                     id: mdlist
+                    padding: 5
+                    spacing: 1
 
 
-<ListItemWithCheckbox>:
+<OrderListItem>:
 
     canvas.before:
         Color:
@@ -86,9 +88,19 @@
             pos: self.pos
             size: self.size
 
+    pos_hint: {"center_y": .5}
+    on_size:
+        self.ids._right_container.width = container.width
+        self.ids._right_container.x = container.width
+
     IconLeftWidget:
-        icon: 'smoking'
+        icon: "smoking"
 
-    RightCheckbox:
+    Container:
+        id: container
 
-    RightCheckbox:
+        MDIconButton:
+            icon: "plus"
+
+        MDIconButton:
+            icon: "minus"
