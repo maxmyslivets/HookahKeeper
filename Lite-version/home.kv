@@ -73,18 +73,20 @@
             ScrollView:
                 MDList:
                     id: mdlist
-                    OneLineAvatarIconListItem:
-                        text: '24 Classic      23:14      01:24      02:14'
-                        IconLeftWidget:
-                            icon: 'smoking'
-                        MDIconButton:
-                            pos_hint: {'right': 1, 'center_y': .5}
-                            icon: 'smoking-off'
 
-<OrderListItem>:
-    text: '24 Classic      23:14      01:24      02:14'
+
+<ListItemWithCheckbox>:
+
+    canvas.before:
+        Color:
+            rgba: .13,.59,.95,.2
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
     IconLeftWidget:
         icon: 'smoking'
-    MDIconButton:
-        pos_hint: {'right': 1, 'center_y': .5}
-        icon: 'smoking-off'
+
+    RightCheckbox:
+
+    RightCheckbox:

@@ -4,10 +4,20 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.clock import Clock
 from time_format import time_edit_1, time_edit_2
 from kivymd.uix.list import OneLineAvatarIconListItem
+from kivymd.uix.list import IRightBodyTouch, OneLineAvatarIconListItem
+from kivymd.uix.selectioncontrol import MDCheckbox
 
 
 class OrderListItem(OneLineAvatarIconListItem):
     pass
+
+
+class ListItemWithCheckbox(OneLineAvatarIconListItem):
+    '''Custom list item.'''
+
+
+class RightCheckbox(IRightBodyTouch, MDCheckbox):
+    '''Custom right container.'''
 
 
 class Home(Screen):
@@ -28,12 +38,15 @@ class Home(Screen):
         self.time_label_2.text = time_edit_2() # время
     
     def add_order(self, table, cls, additive):
-        print(table)
-        order = OrderListItem()
+        """ Добавление заказа в MDList """
+
+        order = ListItemWithCheckbox()
+
         if not additive:
             order.text = table + '    ' + cls + '    ' + time_edit_2()
         else:
             order.text = table + '    ' + additive + '    ' + time_edit_2()
+
         self.ids.mdlist.add_widget(order)
 
 
