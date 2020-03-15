@@ -56,16 +56,18 @@
                     MDTextField:
                         id: table
                         hint_text: 'Table'
-                    MDTextField:
+                    MDDropDownItem:
                         id: cls
-                        hint_text: 'Class hookah'
+                        size_hint_x: 1
+                        items: ['classic', 'additive', 'replay']
+                        dropdown_bg: [1, 1, 1, 1]
                     MDTextField:
                         id: additive
                         hint_text: 'Additive'
                     MDFillRoundFlatButton:
                         size_hint_x: 1
                         text: 'Add order'
-                        on_release: root.add_order(table.text, cls.text, additive.text)
+                        on_release: root.add_order(table.text, cls.current_item, additive.text); table.text=''; cls.current_item=''; additive.text=''
 
             MDSeparator:
                 orientation: 'vertical'

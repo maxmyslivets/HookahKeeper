@@ -37,17 +37,22 @@ class Home(Screen):
         self.time_label_1.text = time_edit_1() # дата, день
         self.time_label_2.text = time_edit_2() # время
     
-    def add_order(self, table, cls, additive):
+    def add_order(self, table, class_hookah, additive):
         """ Добавление заказа в MDList """
 
         order = ListItemWithCheckbox()
 
         if not additive:
-            order.text = table + '    ' + cls + '    ' + time_edit_2()
+            order.text = table + '    ' + class_hookah + '    ' + time_edit_2()
+            with open('statistic.txt', 'a', encoding='utf8') as stat:
+                stat.write(time_edit_1()+' '+time_edit_2()[2:]+' '+table+' '+class_hookah+'\n')
         else:
             order.text = table + '    ' + additive + '    ' + time_edit_2()
+            with open('statistic.txt', 'a', encoding='utf8') as stat:
+                stat.write(time_edit_1()+' '+time_edit_2()[2:]+' '+table+' '+additive+'\n')
 
         self.ids.mdlist.add_widget(order)
+
 
 
 class HookahKeeperApp(MDApp):
