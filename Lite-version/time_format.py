@@ -58,12 +58,18 @@ def data_period(start_data, end_data):
     period = []
     period.append(start_data)
 
-    while period[-1] != end_data:
+    if start_data < end_data:
 
-        future_day = period[-1] + timedelta(days=1)
-        period.append(future_day)
+        while period[-1] != end_data:
+            future_day = period[-1] + timedelta(days=1)
+            period.append(future_day)
 
-    for i in range(len(period)):
-        period[i] = str(period[i]).split('-')[2]+'.'+str(period[i]).split('-')[1]+'.'+str(period[i]).split('-')[0][2:]
+        for i in range(len(period)):
+            period[i] = str(period[i]).split('-')[2]+'.'+str(period[i]).split('-')[1]+'.'+str(period[i]).split('-')[0][2:]
+
+    else:
+
+        from kivymd.toast import toast
+        toast('ОШИБКА: Конечная дата младше начальной!')
 
     return period

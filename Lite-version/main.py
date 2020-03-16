@@ -5,10 +5,14 @@ from kivy.clock import Clock
 from datetime import datetime
 from time_format import time_edit_1, time_edit_2, time_edit_3, time_edit_4, data_period
 from kivymd.uix.list import OneLineAvatarIconListItem
-from kivymd.uix.list import IRightBodyTouch, OneLineAvatarIconListItem
+from kivymd.uix.list import IRightBodyTouch, OneLineAvatarIconListItem, ThreeLineAvatarIconListItem
 from kivymd.uix.selectioncontrol import MDCheckbox
 from kivymd.uix.boxlayout import MDBoxLayout
+from kivy.uix.floatlayout import FloatLayout
 from kivymd.uix.picker import MDDatePicker
+from kivymd.uix.button import MDIconButton
+from kivymd.uix.label import MDLabel
+from kivymd.toast import toast
 import sqlite3 as sql
 from uuid import uuid4 # генерация уникального 128-битного ID
 
@@ -19,6 +23,14 @@ class OrderListItem(OneLineAvatarIconListItem):
 
 class Container(IRightBodyTouch, MDBoxLayout):
     adaptive_width = True
+
+
+class DBListItem(ThreeLineAvatarIconListItem):
+    pass
+
+
+class ButtonForDBListItem(IRightBodyTouch, MDIconButton):
+    pass
 
 
 class Home(Screen):
@@ -161,16 +173,26 @@ class Data(Screen):
                         """ Добавление в MDList """
                         i += 1
                         print(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8])
-                        #FIXME
+                        dblistitemtext = DBListItem()
+                        dblistitemtext.text = str(row[1])+' '+str(row[2])+' '+str(row[3])
+                        dblistitemtext.secondary_text = 'Стол '+str(row[4])+'; Кальян '+str(row[5])+'; Цена '+str(row[8])+';'
+                        dblistitemtext.tertiary_text = 'Заменил уголь в '+str(row[6])+'; Забрал в '+str(row[7])
+                        self.ids.data_list.add_widget(dblistitemtext)
                 
                 if not i:
                     """ Добавление MDLabel(text='Не найдено') в MDList """
-                    print('Not found')
-                    #FIXME
+                    
+                    MDLabelNotFound = MDLabel()
+                    MDLabelNotFound.text = 'Не найдено'
+                    MDLabelNotFound.pos_hint = {'center_x': .5, 'center_y': .5}
+                    NotFoundLabel = FloatLayout()
+                    NotFoundLabel.add_widget(MDLabelNotFound)
+                    self.ids.data_list.add_widget(NotFoundLabel)
                 
                 cur.close()
         
-        else: pass
+        else:
+            toast('ОШИБКА: Введите обе даты!')
 
 
 
