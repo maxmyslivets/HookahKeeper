@@ -193,6 +193,7 @@ class Data(Screen):
                 n_price, n_share = 0, 0
                 n_dates = {}
                 n_days, n_orders = [], []
+                cl_h = {}
                 for row in rows:
 
                     if row[1] in data_list: # если дата равна, то используем
@@ -209,6 +210,13 @@ class Data(Screen):
                         if row[1] not in n_dates:
                             n_dates[row[1]] = 1
                         else: n_dates[row[1]] += 1
+                    print(row[5])
+                    if row[5] not in cl_h:
+                        cl_h[row[5]] = 1
+                    else: cl_h[row[5]] += 1
+
+                print(cl_h)
+
                 # Содание списков с днями и заказами
                 for n_day, n_order in n_dates.items():
                     n_days.append(n_day)
@@ -216,12 +224,13 @@ class Data(Screen):
 
                 # Изменения статистических данных в правом боксе
                 self.ids.n_all_orders.text = 'Общее число заказов: '+str(i)
+                text_class_hookah = ''
+                for cl, n in cl_h.items():
+                    text_class_hookah += cl+': '+str(n)+'\n'
+                self.ids.class_hookah.text = text_class_hookah[:-1]
                 self.ids.n_price.text = 'Общая касса: '+str(n_price)
                 self.ids.n_share.text = 'Зароботная плата: '+str(n_share)
                 diagram_plot.generate(n_days, n_orders) # (дата, кол-во_за_день)
-                print(n_dates)
-                print(n_days)
-                print(n_orders)
                 if self.ids.stat_img.source == 'stat.png':
                     self.ids.stat_img.reload()
                 else:

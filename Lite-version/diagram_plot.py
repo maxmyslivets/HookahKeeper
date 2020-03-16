@@ -1,4 +1,4 @@
-import matplotlib as mpl
+from matplotlib import rcParams
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import datetime as dt
@@ -10,7 +10,7 @@ def generate(data_names, data_values):
 
     dpi = 80
     fig = plt.figure(dpi = dpi, figsize = (512 / dpi, 384 / dpi) )
-    mpl.rcParams.update({'font.size': 10})
+    rcParams.update({'font.size': 10})
 
     plt.title('Кол-во заказов по дням')
 
