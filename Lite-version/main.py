@@ -38,9 +38,18 @@ class DBListItem(ThreeLineAvatarIconListItem):
             cur.execute(delete_command)
             con.commit()
             cur.close()
+    
+    def remove(self, id):
+        #FIXME: Настроить удаление OrderListItem по ID
+        toast(id+' Deleted')
+        # Data.ids.data_list.remove_widget(Data.ids.id)
 
 
 class ButtonForDBListItem(IRightBodyTouch, MDIconButton):
+    pass
+
+
+class BackgroundForItem():
     pass
 
 
@@ -127,9 +136,6 @@ class Home(Screen):
 
             datafordb = [id_order, data, day, time1, tablet, class_hookah, time2, time3, price, share]        # создание набора данных
             cur.execute(f"INSERT INTO HookahOrders VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", datafordb)  # запись в таблицу
-
-            cur.execute("SELECT * FROM HookahOrders")      # чтение с таблицы
-            rows = cur.fetchall()   # запись в переменную всего, что пришло из БД
             
             con.commit()
             cur.close()
@@ -192,7 +198,7 @@ class Data(Screen):
                     if row[1] in data_list: # если дата равна, то используем
                         """ Добавление в MDList """
                         i += 1
-                        dblistitemtext = DBListItem()
+                        dblistitemtext = DBListItem(id=row[0])
                         dblistitemtext.text = str(row[1])+' '+str(row[2])+' '+str(row[3])
                         dblistitemtext.secondary_text = 'Стол '+str(row[4])+'; Кальян '+str(row[5])+'; Цена '+str(row[8])+';'
                         dblistitemtext.tertiary_text = 'ID: '+str(row[0])

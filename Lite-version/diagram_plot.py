@@ -20,7 +20,7 @@ def generate(data_names, data_values):
     xs = range(len(data_names))
 
     plt.bar([x + 0.05 for x in xs], [ d * 0.9 for d in data_values],
-            width = 0.2, color = 'red', alpha = 0.7, zorder = 2)
+            width = 0.2, color = 'blue', alpha = 0.7, zorder = 2)
     plt.xticks(xs, data_names)
 
     fig.autofmt_xdate(rotation = 25)

@@ -91,4 +91,4 @@
 
     ButtonForDBListItem:
         icon: "delete"
-        on_release: root.delete_db_item(dblistitem.tertiary_text)
+        on_release: root.delete_db_item(dblistitem.tertiary_text); root.remove(root.id); dblistitem.text = 'DELETED'; dblistitem.secondary_text = ''

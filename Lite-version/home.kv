@@ -81,7 +81,7 @@
 
 
 <OrderListItem>:
-
+    id: orderitem
     canvas.before:
         Color:
             id: bgc
@@ -96,6 +96,7 @@
         self.ids._right_container.x = container.width
 
     IconLeftWidget:
+        id: lefticon
         icon: "smoking"
 
     Container:
@@ -103,10 +104,12 @@
 
         MDIconButton:
             icon: "plus"
-            #FIXME: Настроить смену фона OrderListItem при нажатии на MDIconButton
-            #on_release: root.ids.IconLeftWidget.icon: ""
+            on_release:
+                if self.icon == "plus": self.icon = "minus"
+                else: self.icon = "plus"
 
         MDIconButton:
             icon: "delete"
-            #FIXME: Настроить смену иконки OrderListItem при нажатии на MDIconButton
-            #on_release: root.ids.bgc.rgba: [.13,.59,.95,1]
+            on_release:
+                if lefticon.icon == "smoking": lefticon.icon = "smoking-off"
+                else: lefticon.icon = "smoking"
