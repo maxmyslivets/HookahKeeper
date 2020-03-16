@@ -48,7 +48,7 @@
                     text: 'Поиск'
                     size_hint: .7, .5
                     pos_hint: {'center_x': .5, 'center_y': .5}
-                    on_release: print(date_picker_label_1.text, '-', date_picker_label_2.text)
+                    on_release: root.read_db(date_picker_label_1.text, date_picker_label_2.text)
         
         BoxLayout:
 

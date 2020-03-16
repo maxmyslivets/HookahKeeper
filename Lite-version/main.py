@@ -3,13 +3,14 @@ from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.clock import Clock
 from datetime import datetime
-from time_format import time_edit_1, time_edit_2, time_edit_3, time_edit_4
+from time_format import time_edit_1, time_edit_2, time_edit_3, time_edit_4, data_period
 from kivymd.uix.list import OneLineAvatarIconListItem
 from kivymd.uix.list import IRightBodyTouch, OneLineAvatarIconListItem
 from kivymd.uix.selectioncontrol import MDCheckbox
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.picker import MDDatePicker
 import sqlite3 as sql
+from uuid import uuid4 # генерация уникального 128-битного ID
 
 
 class OrderListItem(OneLineAvatarIconListItem):
@@ -53,6 +54,7 @@ class Home(Screen):
         if not additive:
             order.text = table + ' ' + class_hookah + '    ' + time1 + '    ' + time2 + '    ' + time3
             self.add_order_in_database(
+                str(uuid4()),
                 time_edit_1().split(' ')[0],
                 time_edit_1().split(' ')[1],
                 time1[1:],
@@ -67,6 +69,7 @@ class Home(Screen):
         else:
             order.text = table + ' ' + additive + '    ' + time1 + '    ' + time2 + '    ' + time3
             self.add_order_in_database(
+                str(uuid4()),
                 time_edit_1().split(' ')[0],
                 time_edit_1().split(' ')[1],
                 time1[1:],
@@ -80,13 +83,14 @@ class Home(Screen):
 
         self.ids.mdlist.add_widget(order)
     
-    def add_order_in_database(self, data, day, time1, tablet, class_hookah, time2, time3, price, share):
+    def add_order_in_database(self, id_order, data, day, time1, tablet, class_hookah, time2, time3, price, share):
         """ Запись в БД """
 
         con = sql.connect('test.db')    # подключиться к БД по адресу или создать, если не существует
         with con:
             cur = con.cursor()  # создание курсора
             cur.execute('CREATE TABLE IF NOT EXISTS HookahOrders ('     # создать таблицу, если не существует
+                'id_order TEXT, '   # уникальный 128-битный ID
                 'data TEXT, '   # дата добавления заказа
                 'day TEXT, '    # день
                 'time1 TEXT, '  # время выноса
@@ -97,13 +101,14 @@ class Home(Screen):
                 'price INTEGER, '   # цена кальяна
                 'share INTEGER)'    # доля кальянного мастера
                 )
-            datafordb = [data, day, time1, tablet, class_hookah, time2, time3, price, share]        # создание набора данных
-            cur.execute(f"INSERT INTO HookahOrders VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", datafordb)  # запись в таблицу
+
+            datafordb = [id_order, data, day, time1, tablet, class_hookah, time2, time3, price, share]        # создание набора данных
+            cur.execute(f"INSERT INTO HookahOrders VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", datafordb)  # запись в таблицу
 
             cur.execute("SELECT * FROM HookahOrders")      # чтение с таблицы
             rows = cur.fetchall()   # запись в переменную всего, что пришло из БД
             for row in rows:
-                print(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8])
+                print(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9])
             
             con.commit()
             cur.close()
@@ -114,21 +119,59 @@ class Data(Screen):
     with open("data.kv", encoding='utf8') as DataKV:
         Builder.load_string(DataKV.read())
 
-    min_data = None
-
     def show_date_picker_1(self):
         MDDatePicker(self.set_previous_date_1).open()
 
+    start_datetime_date = None
     def set_previous_date_1(self, date_obj):
+        self.start_datetime_date = date_obj   # <class 'datetime.date'>
         date_obj = str(date_obj).split('-')
         self.ids.date_picker_label_1.text = str(date_obj[2])+'.'+str(date_obj[1])+'.'+str(date_obj[0])[2:]
     
     def show_date_picker_2(self):
         MDDatePicker(self.set_previous_date_2).open()
 
+    end_datetime_date = None
     def set_previous_date_2(self, date_obj):
+        self.end_datetime_date = date_obj   # <class 'datetime.date'>
         date_obj = str(date_obj).split('-')
         self.ids.date_picker_label_2.text = str(date_obj[2])+'.'+str(date_obj[1])+'.'+str(date_obj[0])[2:]
+    
+    def read_db(self, start_data, end_data):
+        """ Чтение данных из БД за выбранный период и передача в MDList"""
+
+        if (start_data != '') and (end_data != ''):
+
+            con = sql.connect('test.db')
+
+            with con:
+
+                cur = con.cursor()
+
+                cur.execute("SELECT * FROM HookahOrders ORDER BY data")      # чтение с таблицы с сортировкой по колонке даты
+                rows = cur.fetchall()   # запись в переменную всего, что пришло из БД
+
+                data_list = data_period(self.start_datetime_date, self.end_datetime_date)   # получаем список дат из периода
+
+                i = 0   # счетчик заказов, попавших в выборку
+
+                for row in rows:
+
+                    if row[1] in data_list: # если дата равна, то используем
+                        """ Добавление в MDList """
+                        i += 1
+                        print(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8])
+                        #FIXME
+                
+                if not i:
+                    """ Добавление MDLabel(text='Не найдено') в MDList """
+                    print('Not found')
+                    #FIXME
+                
+                cur.close()
+        
+        else: pass
+
 
 
 class HookahKeeperApp(MDApp):

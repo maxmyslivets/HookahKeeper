@@ -50,3 +50,20 @@ def time_edit_4():
         """ время конца покура """
 
         return (str((datetime.now()+timedelta(hours=2))).split(' ')[1])[:-10]
+
+def data_period(start_data, end_data):
+    """ получаем список дат из периода """
+    # start_data and end_data - <class 'datetime.date'>
+
+    period = []
+    period.append(start_data)
+
+    while period[-1] != end_data:
+
+        future_day = period[-1] + timedelta(days=1)
+        period.append(future_day)
+
+    for i in range(len(period)):
+        period[i] = str(period[i]).split('-')[2]+'.'+str(period[i]).split('-')[1]+'.'+str(period[i]).split('-')[0][2:]
+
+    return period
