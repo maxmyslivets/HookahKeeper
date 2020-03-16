@@ -9,6 +9,13 @@
             md_bg_color: app.theme_cls.primary_color
             elevation: 10
             pos_hint: {'top': 1}
+
+            MDFillRoundFlatIconButton:
+                text: "Вернуться назад"
+                icon: "chevron-left"
+                md_bg_color: .13,.51,.90,1
+                pos_hint: {'left': 1, 'center_y': .5}
+                on_release: root.manager.current='HomeScreen'
             
         GridLayout:
             size_hint_y: .2
@@ -38,11 +45,22 @@
 
             FloatLayout:
                 MDFillRoundFlatButton:
-                    text: 'Заказы'
+                    text: 'Поиск'
                     size_hint: .7, .5
                     pos_hint: {'center_x': .5, 'center_y': .5}
-                    on_release: root.manager.current='HomeScreen'
+                    on_release: print(date_picker_label_1.text, '-', date_picker_label_2.text)
         
         BoxLayout:
-        
+
+            BoxLayout:
+                ScrollView:
+                    MDList:
+                        id: data_list
+                        padding: 5
+                        spacing: 1
+
+            MDSeparator:
+                orientation: 'vertical'
             
+            BoxLayout:
+                size_hint_x: .6
