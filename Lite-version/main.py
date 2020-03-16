@@ -15,6 +15,7 @@ from kivymd.uix.label import MDLabel
 from kivymd.toast import toast
 import sqlite3 as sql
 from uuid import uuid4 # генерация уникального 128-битного ID
+import diagram_plot
 
 
 class OrderListItem(OneLineAvatarIconListItem):
@@ -183,19 +184,42 @@ class Data(Screen):
                 data_list = data_period(self.start_datetime_date, self.end_datetime_date)   # получаем список дат из периода
 
                 i = 0   # счетчик заказов, попавших в выборку
-
+                n_price, n_share = 0, 0
+                n_dates = {}
+                n_days, n_orders = [], []
                 for row in rows:
 
                     if row[1] in data_list: # если дата равна, то используем
                         """ Добавление в MDList """
                         i += 1
-                        print(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8])
                         dblistitemtext = DBListItem()
                         dblistitemtext.text = str(row[1])+' '+str(row[2])+' '+str(row[3])
                         dblistitemtext.secondary_text = 'Стол '+str(row[4])+'; Кальян '+str(row[5])+'; Цена '+str(row[8])+';'
                         dblistitemtext.tertiary_text = 'ID: '+str(row[0])
                         self.ids.data_list.add_widget(dblistitemtext)
-                
+                        n_price += row[8]   # подсчет общей кассы
+                        n_share += row[9]   # подсчет зароботной платы
+                        # Сбор дней в словарь и подсчет заказов за день
+                        if row[1] not in n_dates:
+                            n_dates[row[1]] = 1
+                        else: n_dates[row[1]] += 1
+                        # Содание списков с днями и заказами
+                        for n_order_and_day in n_dates:
+                            #FIXME
+                            print(type(n_order_and_day), n_dates[n_order_and_day])
+                            n_days.append(n_order_and_day)
+                            n_orders.append(n_dates[n_order_and_day])
+
+                # Изменения статистических данных в правом боксе
+                self.ids.n_all_orders.text = 'Общее число заказов: '+str(i)
+                self.ids.n_price.text = 'Общая касса: '+str(n_price)
+                self.ids.n_share.text = 'Зароботная плата: '+str(n_share)
+                diagram_plot.generate(1, 1) # (дата, кол-во_за_день)
+                print(n_dates)
+                print(n_days)
+                print(n_orders)
+                self.ids.stat_img.source = 'stat.png'
+
                 if not i and self.start_datetime_date < self.end_datetime_date and self.start_datetime_date != self.end_datetime_date:
                     toast('Не найдено')
                 
