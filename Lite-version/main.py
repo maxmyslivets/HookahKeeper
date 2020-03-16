@@ -5,7 +5,7 @@ from kivy.clock import Clock
 from datetime import datetime
 from time_format import time_edit_1, time_edit_2, time_edit_3, time_edit_4, data_period
 from kivymd.uix.list import OneLineAvatarIconListItem
-from kivymd.uix.list import IRightBodyTouch, OneLineAvatarIconListItem, ThreeLineAvatarIconListItem
+from kivymd.uix.list import IRightBodyTouch, OneLineAvatarIconListItem, ThreeLineAvatarIconListItem, MDList
 from kivymd.uix.selectioncontrol import MDCheckbox
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivy.uix.floatlayout import FloatLayout
@@ -26,7 +26,17 @@ class Container(IRightBodyTouch, MDBoxLayout):
 
 
 class DBListItem(ThreeLineAvatarIconListItem):
-    pass
+    
+    def delete_db_item(self, id):
+        """ Удаление данных заказа с БД """
+
+        con = sql.connect('test.db')    # подключиться к БД по адресу или создать, если не существует
+        with con:
+            cur = con.cursor()  # создание курсора
+            delete_command = 'DELETE FROM HookahOrders WHERE id_order = "'+id[4:]+'"'
+            cur.execute(delete_command)
+            con.commit()
+            cur.close()
 
 
 class ButtonForDBListItem(IRightBodyTouch, MDIconButton):
@@ -119,8 +129,6 @@ class Home(Screen):
 
             cur.execute("SELECT * FROM HookahOrders")      # чтение с таблицы
             rows = cur.fetchall()   # запись в переменную всего, что пришло из БД
-            for row in rows:
-                print(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9])
             
             con.commit()
             cur.close()
@@ -130,6 +138,12 @@ class Data(Screen):
 
     with open("data.kv", encoding='utf8') as DataKV:
         Builder.load_string(DataKV.read())
+    
+    #FIXME: При нажатии на поиск в БД необходимо добавить удаление mdlist и создание чистого
+    """MDL = MDList()
+    MDL.id = 'data_list'
+    MDL.padding = 5
+    MDL.spacing = 1"""
 
     def show_date_picker_1(self):
         MDDatePicker(self.set_previous_date_1).open()
@@ -151,6 +165,9 @@ class Data(Screen):
     
     def read_db(self, start_data, end_data):
         """ Чтение данных из БД за выбранный период и передача в MDList"""
+
+        #self.ids.scrollForDatalist.remove_widget(self.MDL)
+        #self.ids.scrollForDatalist.add_widget(self.MDL)
 
         if (start_data != '') and (end_data != ''):
 
@@ -176,24 +193,16 @@ class Data(Screen):
                         dblistitemtext = DBListItem()
                         dblistitemtext.text = str(row[1])+' '+str(row[2])+' '+str(row[3])
                         dblistitemtext.secondary_text = 'Стол '+str(row[4])+'; Кальян '+str(row[5])+'; Цена '+str(row[8])+';'
-                        dblistitemtext.tertiary_text = 'Заменил уголь в '+str(row[6])+'; Забрал в '+str(row[7])
+                        dblistitemtext.tertiary_text = 'ID: '+str(row[0])
                         self.ids.data_list.add_widget(dblistitemtext)
                 
-                if not i:
-                    """ Добавление MDLabel(text='Не найдено') в MDList """
-                    
-                    MDLabelNotFound = MDLabel()
-                    MDLabelNotFound.text = 'Не найдено'
-                    MDLabelNotFound.pos_hint = {'center_x': .5, 'center_y': .5}
-                    NotFoundLabel = FloatLayout()
-                    NotFoundLabel.add_widget(MDLabelNotFound)
-                    self.ids.data_list.add_widget(NotFoundLabel)
+                if not i and self.start_datetime_date < self.end_datetime_date and self.start_datetime_date != self.end_datetime_date:
+                    toast('Не найдено')
                 
                 cur.close()
         
         else:
             toast('ОШИБКА: Введите обе даты!')
-
 
 
 class HookahKeeperApp(MDApp):

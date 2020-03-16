@@ -58,7 +58,7 @@ def data_period(start_data, end_data):
     period = []
     period.append(start_data)
 
-    if start_data < end_data:
+    if start_data <= end_data:
 
         while period[-1] != end_data:
             future_day = period[-1] + timedelta(days=1)

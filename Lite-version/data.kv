@@ -49,11 +49,13 @@
                     size_hint: .7, .5
                     pos_hint: {'center_x': .5, 'center_y': .5}
                     on_release: root.read_db(date_picker_label_1.text, date_picker_label_2.text)
+                    #on_release: root.remove_widget(data_list2)
         
         BoxLayout:
 
             BoxLayout:
                 ScrollView:
+                    id: scrollForDatalist
                     MDList:
                         id: data_list
                         padding: 5
@@ -70,3 +72,4 @@
 
     ButtonForDBListItem:
         icon: "delete"
+        on_release: root.delete_db_item(dblistitem.tertiary_text)
