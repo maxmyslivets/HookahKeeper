@@ -203,22 +203,23 @@ class Data(Screen):
                         if row[1] not in n_dates:
                             n_dates[row[1]] = 1
                         else: n_dates[row[1]] += 1
-                        # Содание списков с днями и заказами
-                        for n_order_and_day in n_dates:
-                            #FIXME
-                            print(type(n_order_and_day), n_dates[n_order_and_day])
-                            n_days.append(n_order_and_day)
-                            n_orders.append(n_dates[n_order_and_day])
+                # Содание списков с днями и заказами
+                for n_day, n_order in n_dates.items():
+                    n_days.append(n_day)
+                    n_orders.append(n_order)
 
                 # Изменения статистических данных в правом боксе
                 self.ids.n_all_orders.text = 'Общее число заказов: '+str(i)
                 self.ids.n_price.text = 'Общая касса: '+str(n_price)
                 self.ids.n_share.text = 'Зароботная плата: '+str(n_share)
-                diagram_plot.generate(1, 1) # (дата, кол-во_за_день)
+                diagram_plot.generate(n_days, n_orders) # (дата, кол-во_за_день)
                 print(n_dates)
                 print(n_days)
                 print(n_orders)
-                self.ids.stat_img.source = 'stat.png'
+                if self.ids.stat_img.source == 'stat.png':
+                    self.ids.stat_img.reload()
+                else:
+                    self.ids.stat_img.source = 'stat.png'
 
                 if not i and self.start_datetime_date < self.end_datetime_date and self.start_datetime_date != self.end_datetime_date:
                     toast('Не найдено')
