@@ -31,7 +31,7 @@ class DBListItem(ThreeLineAvatarIconListItem):
     def delete_db_item(self, id):
         """ Удаление данных заказа с БД """
 
-        con = sql.connect('test.db')    # подключиться к БД по адресу или создать, если не существует
+        con = sql.connect('test2.db')    # подключиться к БД по адресу или создать, если не существует
         with con:
             cur = con.cursor()  # создание курсора
             delete_command = 'DELETE FROM HookahOrders WHERE id_order = "'+id[4:]+'"'
@@ -118,7 +118,7 @@ class Home(Screen):
     def add_order_in_database(self, id_order, data, day, time1, tablet, class_hookah, time2, time3, price, share):
         """ Запись в БД """
 
-        con = sql.connect('test.db')    # подключиться к БД по адресу или создать, если не существует
+        con = sql.connect('test2.db')    # подключиться к БД по адресу или создать, если не существует
         with con:
             cur = con.cursor()  # создание курсора
             cur.execute('CREATE TABLE IF NOT EXISTS HookahOrders ('     # создать таблицу, если не существует
@@ -178,7 +178,7 @@ class Data(Screen):
 
         if (start_data != '') and (end_data != ''):
 
-            con = sql.connect('test.db')
+            con = sql.connect('test2.db')
 
             with con:
 
@@ -210,12 +210,11 @@ class Data(Screen):
                         if row[1] not in n_dates:
                             n_dates[row[1]] = 1
                         else: n_dates[row[1]] += 1
-                    print(row[5])
+
+                    # Сбор заказов в словарь и подсчет всех заказанных видов
                     if row[5] not in cl_h:
                         cl_h[row[5]] = 1
                     else: cl_h[row[5]] += 1
-
-                print(cl_h)
 
                 # Содание списков с днями и заказами
                 for n_day, n_order in n_dates.items():

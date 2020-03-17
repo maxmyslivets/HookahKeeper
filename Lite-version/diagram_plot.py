@@ -6,11 +6,10 @@ import csv
 
 
 def generate(data_names, data_values):
-    
 
     dpi = 80
     fig = plt.figure(dpi = dpi, figsize = (512 / dpi, 384 / dpi) )
-    rcParams.update({'font.size': 10})
+    rcParams.update({'font.size': 16})
 
     plt.title('Кол-во заказов по дням')
 
@@ -25,5 +24,4 @@ def generate(data_names, data_values):
 
     fig.autofmt_xdate(rotation = 25)
 
-    plt.legend(loc='upper right')
     fig.savefig('stat.png')
