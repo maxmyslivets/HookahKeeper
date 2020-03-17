@@ -83,7 +83,7 @@ class Home(Screen):
         elif class_hookah == 'Микс': price = 35
         elif class_hookah == 'Замена': price = 10
 
-        if not additive:
+        if not additive and class_hookah != 'Замена':
             order.text = table + ' ' + class_hookah + '    ' + time1 + '    ' + time2 + '    ' + time3
             self.add_order_in_database(
                 str(uuid4()),
@@ -97,6 +97,22 @@ class Home(Screen):
                 price,
                 5
                 )
+        
+        elif class_hookah == 'Замена':
+            order.text = table + ' ' + class_hookah + '    ' + time1 + '    ' + time2 + '    ' + time3
+            self.add_order_in_database(
+                str(uuid4()),
+                time_edit_1().split(' ')[0],
+                time_edit_1().split(' ')[1],
+                time1[1:],
+                table,
+                class_hookah,
+                time2,
+                time3,
+                price,
+                0
+                )
+        
             
         else:
             order.text = table + ' ' + additive + '    ' + time1 + '    ' + time2 + '    ' + time3
@@ -110,7 +126,7 @@ class Home(Screen):
                 time2,
                 time3,
                 price,
-                0
+                5
                 )
 
         self.ids.mdlist.add_widget(order)
@@ -201,20 +217,21 @@ class Data(Screen):
                         i += 1
                         dblistitemtext = DBListItem(id=row[0])
                         dblistitemtext.text = str(row[1])+' '+str(row[2])+' '+str(row[3])
-                        dblistitemtext.secondary_text = 'Стол '+str(row[4])+'; Кальян '+str(row[5])+'; Цена '+str(row[8])+';'
+                        dblistitemtext.secondary_text = 'Стол '+str(row[4])+'; Кальян '+str(row[5])+'; Цена '+str(row[8])+'; '+str(row[-1])
                         dblistitemtext.tertiary_text = 'ID: '+str(row[0])
                         self.ids.data_list.add_widget(dblistitemtext)
                         n_price += row[8]   # подсчет общей кассы
                         n_share += row[9]   # подсчет зароботной платы
+
                         # Сбор дней в словарь и подсчет заказов за день
                         if row[1] not in n_dates:
                             n_dates[row[1]] = 1
                         else: n_dates[row[1]] += 1
 
-                    # Сбор заказов в словарь и подсчет всех заказанных видов
-                    if row[5] not in cl_h:
-                        cl_h[row[5]] = 1
-                    else: cl_h[row[5]] += 1
+                        # Сбор заказов в словарь и подсчет всех заказанных видов
+                        if row[5] not in cl_h:
+                            cl_h[row[5]] = 1
+                        else: cl_h[row[5]] += 1
 
                 # Содание списков с днями и заказами
                 for n_day, n_order in n_dates.items():
