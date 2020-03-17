@@ -24,4 +24,4 @@ def generate(data_names, data_values):
 
     fig.autofmt_xdate(rotation = 25)
 
-    fig.savefig('stat.png')
+    fig.savefig('lib/plot/stat.png')
