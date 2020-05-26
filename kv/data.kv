@@ -1,4 +1,7 @@
+#:import toast kivymd.toast.toast
+
 <Data>:
+    data_list: data_list
 
     BoxLayout:
         orientation: 'vertical'
@@ -49,8 +52,7 @@
                     size_hint: .7, .5
                     pos_hint: {'center_x': .5, 'center_y': .5}
                     on_release: root.read_db(date_picker_label_1.text, date_picker_label_2.text)
-                    #on_release: root.remove_widget(data_list2)
-        
+
         BoxLayout:
 
             BoxLayout:
@@ -91,8 +93,7 @@
                     id: stat_img
 
 <DBListItem>:
-    id: dblistitem
 
     ButtonForDBListItem:
         icon: "delete"
-        on_release: root.delete_db_item(dblistitem.tertiary_text); root.remove(root.id); dblistitem.text = 'DELETED'; dblistitem.secondary_text = ''
+        on_release: root.delete_db_item(root.id); toast('DELETED is '+root.id); root.text = 'DELETED'; root.secondary_text = ''

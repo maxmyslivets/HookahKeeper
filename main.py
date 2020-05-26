@@ -34,15 +34,10 @@ class DBListItem(ThreeLineAvatarIconListItem):
         con = sql.connect('data/test2.db')    # подключиться к БД по адресу или создать, если не существует
         with con:
             cur = con.cursor()  # создание курсора
-            delete_command = 'DELETE FROM HookahOrders WHERE id_order = "'+id[4:]+'"'
+            delete_command = 'DELETE FROM HookahOrders WHERE id_order = "'+id+'"'
             cur.execute(delete_command)
             con.commit()
             cur.close()
-    
-    def remove(self, id):
-        #FIXME: Настроить удаление OrderListItem по ID
-        toast(id+' Deleted')
-        # Data.ids.data_list.remove_widget(Data.ids.id)
 
 
 class ButtonForDBListItem(IRightBodyTouch, MDIconButton):
@@ -185,12 +180,24 @@ class Data(Screen):
         self.end_datetime_date = date_obj   # <class 'datetime.date'>
         date_obj = str(date_obj).split('-')
         self.ids.date_picker_label_2.text = str(date_obj[2])+'.'+str(date_obj[1])+'.'+str(date_obj[0])[2:]
+
+    id_list = []
+    def clear_list(self):
+        
+        """if self.ids.n_all_orders.text != '':
+            print('lol')
+            self.ids.data_list.remove_widget(self.ids.ID)
+            self.ids.data_list.clear_widgets()
+            self.ids.n_all_orders.text = ''
+            self.ids.class_hookah.text = ''
+            self.ids.n_price.text = ''
+            self.ids.n_share.text = ''
+            self.ids.stat_img.clear_widgets()"""
     
     def read_db(self, start_data, end_data):
         """ Чтение данных из БД за выбранный период и передача в MDList"""
-
-        #self.ids.scrollForDatalist.remove_widget(self.MDL)
-        #self.ids.scrollForDatalist.add_widget(self.MDL)
+        
+        self.id_list = []
 
         if (start_data != '') and (end_data != ''):
 
@@ -219,6 +226,9 @@ class Data(Screen):
                         dblistitemtext.text = str(row[1])+' '+str(row[2])+' '+str(row[3])
                         dblistitemtext.secondary_text = 'Стол '+str(row[4])+'; Кальян '+str(row[5])+'; Цена '+str(row[8])+'; '+str(row[-1])
                         dblistitemtext.tertiary_text = 'ID: '+str(row[0])
+                        
+                        """self.id_list.append(str(row[0]))"""
+
                         self.ids.data_list.add_widget(dblistitemtext)
                         n_price += row[8]   # подсчет общей кассы
                         n_share += row[9]   # подсчет зароботной платы

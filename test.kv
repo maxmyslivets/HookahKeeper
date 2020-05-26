@@ -1,0 +1,31 @@
+<Home>:
+    a2: a2
+    BoxLayout:
+        orientation: 'vertical'
+        BoxLayout:
+            orientation: 'vertical'
+            Button:
+                text: 'Add Button id: a2'
+                on_release: root.add_func()
+            Button:
+                text: 'Remove Button id: a2'
+                on_release: root.remove_func()
+        
+        BoxLayout:
+            BoxLayout:
+                id: list_a1
+                orientation: 'vertical'
+                Button:
+                    id: a1
+                    text: 'Const id: a1'
+                    
+            BoxLayout:
+                id: list_a2
+                orientation: 'vertical'
+                ButCats:
+                    id: a2
+        
+
+<ButCats>:
+    id: a2
+    text: 'id: a2\nRemove me'
